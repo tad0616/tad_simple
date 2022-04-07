@@ -1,0 +1,13 @@
+#xo-breadcrumb {
+    margin-top: 10px;
+  }
+
+  #xo-breadcrumb li,
+  #xo-breadcrumb li a {
+    line-height: 30px;
+  }
+
+  #xo-breadcrumb .xo-help img {
+    padding: 0px;
+    vertical-align: middle;
+  }
