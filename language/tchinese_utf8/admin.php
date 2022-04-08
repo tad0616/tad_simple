@@ -29,6 +29,7 @@ define('_TAD_SIMPLE_ALL_CONFIG_OK', '所有設定均正確');
 define('_TAD_SIMPLE_STRICT_TRANS_TABLES', '資料庫的 sql_mode 過於嚴格，可能會導致許多模組運行不正常，可點此暫時修改設定，但重啟後會回復原設定。一勞永逸法：開啟資料庫設定檔（如：/etc/mysql/my.cnf），並於 [mysqld] 下加入或修改為 sql_mode = "NO_ENGINE_SUBSTITUTION" 並重啟資料庫。');
 
 define('_TAD_SIMPLE_MODULE', '模組');
+define('_TAD_SIMPLE_THEME', '預設佈景');
 define('_TAD_SIMPLE_SITEPREF', '偏好設定');
 define('_TAD_SIMPLE_FRONT', '前台');
 define('_TAD_SIMPLE_BACKEND', '後台');

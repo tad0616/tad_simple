@@ -29,6 +29,7 @@ define('_TAD_SIMPLE_ALL_CONFIG_OK', 'All settings are correct');
 define('_TAD_SIMPLE_STRICT_TRANS_TABLES', 'The sql_mode of the database is too strict, which may cause many modules to run abnormally, you can click here to change the setting temporarily, but the original setting will be restored after reboot. Once and for all method: Open the database configuration file (e.g. /etc/mysql/my.cnf) and add or modify sql_mode = "NO_ENGINE_SUBSTITUTION" under [mysqld] and restart the database.');
 
 define('_TAD_SIMPLE_MODULE', 'Modules');
+define('_TAD_SIMPLE_THEME', 'Default theme');
 define('_TAD_SIMPLE_SITEPREF', 'Preferences');
 define('_TAD_SIMPLE_FRONT', 'Front');
 define('_TAD_SIMPLE_BACKEND', 'Backend');
