@@ -1,10 +1,15 @@
 <div id="<{$modules_type}>-sort" class="vtb">
     <ul class="vhead">
         <li class="w20 m"><{$modules_txt}><{$smarty.const._TAD_SIMPLE_MODULE}></li>
-        <li class="w35 m"><{$smarty.const._TAD_SIMPLE_BACKEND}><{$smarty.const._TAD_SIMPLE_PAGE}></li>
-        <li class="w15 m"><{$smarty.const._TAD_SIMPLE_FRONT}><{$smarty.const._TAD_SIMPLE_PAGE}></li>
-        <li class="w10 m"><{$smarty.const._TAD_SIMPLE_MODULE}><{$smarty.const._TAD_SIMPLE_SITEPREF}></li>
-        <li class="w10 m"><{$smarty.const._TAD_SIMPLE_MODULE}><{$smarty.const._TAD_SIMPLE_BLOCK}></li>
+        <{if $modules_type!='no_menu_modules'}>
+            <li class="w30 m"><{$smarty.const._TAD_SIMPLE_BACKEND}><{$smarty.const._TAD_SIMPLE_PAGE}></li>
+            <li class="w25 m"><{$smarty.const._TAD_SIMPLE_FRONT}><{$smarty.const._TAD_SIMPLE_PAGE}></li>
+        <{else}>
+            <li class="w45 m"><{$smarty.const._TAD_SIMPLE_BACKEND}><{$smarty.const._TAD_SIMPLE_PAGE}></li>
+            <li class="w10 m"><{$smarty.const._TAD_SIMPLE_FRONT}><{$smarty.const._TAD_SIMPLE_PAGE}></li>
+        <{/if}>
+        <li class="w10 m"><{$smarty.const._TAD_SIMPLE_SITEPREF}></li>
+        <li class="w5 m"><{$smarty.const._TAD_SIMPLE_BLOCK}></li>
         <li class="w10 m"><{$smarty.const._TAD_SIMPLE_FUNCTION}></li>
     </ul>
     <{foreach from=$list_modules item=mod}>
@@ -47,7 +52,12 @@
                     </div>
                 </div>
             </li>
-            <li class="w35 m" style="line-height: 1.5rem;">
+
+            <{if $modules_type!='no_menu_modules'}>
+                <li class="w30 m" style="line-height: 1.5rem;">
+            <{else}>
+                <li class="w45 m" style="line-height: 1.5rem;">
+            <{/if}>
 
                 <div class="vcell"><{$smarty.const._TAD_SIMPLE_BACKEND}><{$smarty.const._TAD_SIMPLE_PAGE}></div>
                 <{if $mod.info.hasAdmin==1}>
@@ -62,13 +72,24 @@
                 <{/if}>
             </li>
 
-            <li class="w15 m" style="line-height: 1.5rem;">
+                <{if $modules_type!='no_menu_modules'}>
+                    <li class="w25 m" style="line-height: 1.5rem;">
+                <{else}>
+                    <li class="w10 m c" style="line-height: 1.5rem;">
+                <{/if}>
                 <div class="vcell"><{$smarty.const._TAD_SIMPLE_FRONT}><{$smarty.const._TAD_SIMPLE_PAGE}></div>
                 <{if $mod.info.hasMain==1}>
-                    <a href="<{$xoops_url}>/modules/<{$mod.info.dirname}>" title="<{$mod.title}><{$smarty.const._TAD_SIMPLE_FRONT}>" class="btn-my btn-page"><{$smarty.const._TAD_SIMPLE_FRONT}></a>
-                    <{foreach from=$mod.info.sub item=items}>
-                        <a href="<{$xoops_url}>/modules/<{$mod.info.dirname}>/<{$items.url}>" class="btn-my btn-page"><{$items.name}></a>
-                    <{/foreach}>
+                    <a href="<{$xoops_url}>/modules/<{$mod.info.dirname}>" title="<{$mod.title}><{$smarty.const._TAD_SIMPLE_FRONT}>" class="btn-my btn-page"><{$mod.title}><{$smarty.const._TAD_SIMPLE_FRONT}></a>
+                    <{if $mod.interface_menu}>
+                        <{foreach from=$mod.interface_menu key=item_name item=item_url}>
+                            <a href="<{$xoops_url}>/modules/<{$mod.info.dirname}>/<{$item_url}>" class="btn-my btn-page"><{$item_name}></a>
+                        <{/foreach}>
+
+                    <{else}>
+                        <{foreach from=$mod.info.sub item=items}>
+                            <a href="<{$xoops_url}>/modules/<{$mod.info.dirname}>/<{$items.url}>" class="btn-my btn-page"><{$items.name}></a>
+                        <{/foreach}>
+                    <{/if}>
                 <{else}>
                     <{$smarty.const._TAD_SIMPLE_NO}><{$smarty.const._TAD_SIMPLE_FRONT}>
                 <{/if}>
@@ -83,10 +104,10 @@
                 <{/if}>
             </li>
 
-            <li class="w10 m c">
+            <li class="w5 m c">
                 <div class="vcell"><{$smarty.const._TAD_SIMPLE_MODULE}><{$smarty.const._TAD_SIMPLE_BLOCK}></div>
                 <{if $mod.info.blocks}>
-                    <a href="<{$xoops_url}>/modules/system/admin.php?fct=blocksadmin&op=list&filter=1&selgen=<{$mod.mid}>&selmod=-2&selgrp=-1&selvis=-1" title="<{$mod.title}><{$smarty.const._TAD_SIMPLE_BLOCK}>"><{$smarty.const._TAD_SIMPLE_BLOCK}> (<{$mod.info.blocks|@count}>)</a>
+                    <a href="<{$xoops_url}>/modules/system/admin.php?fct=blocksadmin&op=list&filter=1&selgen=<{$mod.mid}>&selmod=-2&selgrp=-1&selvis=-1" title="<{$mod.title}><{$smarty.const._TAD_SIMPLE_BLOCK}>"><{$mod.info.blocks|@count}><{$smarty.const._TAD_SIMPLE_BLOCK}></a>
                 <{else}>
                     <{$smarty.const._TAD_SIMPLE_NO}><{$smarty.const._TAD_SIMPLE_BLOCK}>
                 <{/if}>

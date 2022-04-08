@@ -15,12 +15,14 @@
             <{/if}>
 
             <{if $hide_modules}>
+                <{assign var="modules_type" value="hide_modules"}>
                 <{assign var="list_modules" value=$hide_modules}>
                 <{assign var="modules_txt" value=$smarty.const._TAD_SIMPLE_HIDDEN_IN_MENU}>
                 <{includeq file="$xoops_rootpath/modules/system/themes/tad_simple/xotpl/sub_list_modules.tpl"}>
             <{/if}>
 
             <{if $no_menu_modules}>
+                <{assign var="modules_type" value="no_menu_modules"}>
                 <{assign var="list_modules" value=$no_menu_modules}>
                 <{assign var="modules_txt" value=$smarty.const._TAD_SIMPLE_NO_FRONT}>
                 <{includeq file="$xoops_rootpath/modules/system/themes/tad_simple/xotpl/sub_list_modules.tpl"}>

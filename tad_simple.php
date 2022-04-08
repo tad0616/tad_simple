@@ -122,6 +122,8 @@ class TadSimpleGui extends XoopsSystemGui
         $xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/tad_simple/css/style.css');
         $xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/tad_simple/css/vtb.css');
 
+        $xoTheme->addStylesheet(XOOPS_URL . "/modules/tadtools/css/font-awesome/css/font-awesome.css");
+
         $tpl->assign('lang_cp', _CPHOME);
         //start system overview
         //$tpl->assign('lang_xoops_version', XOOPS_VERSION);
@@ -236,6 +238,7 @@ class TadSimpleGui extends XoopsSystemGui
                 }
                 $rtn['info'] = $info;
                 $rtn['admin_menu'] = $this->adminmenu(XOOPS_ROOT_PATH . "/modules/{$info['dirname']}/", $info['adminmenu']);
+                $rtn['interface_menu'] = $this->interface_menu($info['dirname']);
 
                 if ($rtn['isactive']) {
                     if ($rtn['hasmain']) {
@@ -259,6 +262,23 @@ class TadSimpleGui extends XoopsSystemGui
         if (file_exists($path . $menu)) {
             include $path . $menu;
             return $adminmenu;
+        }
+    }
+
+    private function interface_menu($dirname)
+    {
+        if (file_exists(XOOPS_ROOT_PATH . "/uploads/menu_{$dirname}.txt")) {
+            $interface_menu = [];
+            $json = file_get_contents(XOOPS_ROOT_PATH . "/uploads/menu_{$dirname}.txt");
+            $menu_arr = json_decode($json, true);
+
+            foreach ($menu_arr as $name => $url) {
+
+                if (strpos($url, 'admin/') === false && $url != 'index.php') {
+                    $interface_menu[$name] = $url;
+                }
+            }
+            return $interface_menu;
         }
     }
 
