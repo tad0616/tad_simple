@@ -2,8 +2,8 @@
 use Xmf\Request;
 use XoopsModules\Tadtools\Utility;
 
-include_once "../../../../mainfile.php";
-
+// include_once "../../../../mainfile.php";
+require_once dirname(dirname(dirname(dirname(__DIR__)))) . '/include/cp_header.php';
 $op = Request::getString('op');
 $v = Request::getString('v');
 $tad_adm_mid = Request::getInt('tad_adm_mid');
@@ -12,7 +12,7 @@ $pk = Request::getString('pk');
 $name = Request::getString('name');
 $value = Request::getString('value');
 $mid = Request::getInt('mid');
-$weight = Request::getInt('weight');
+$weight = Request::getString('weight');
 $isactive = Request::getInt('isactive');
 $mids = Request::getArray('mids');
 
@@ -75,16 +75,17 @@ switch ($op) {
         sql_mode();
         header("location: " . XOOPS_URL . "/admin.php");
         exit;
-
-    default:
-        check_templates();
-        break;
 }
 
 // 顯示或隱藏模組
 function change_module_display($mid, $weight)
 {
     global $xoopsDB;
+    if ($weight == 'auto') {
+        $sql = "select max(`weight`)+1 from " . $xoopsDB->prefix('modules') . "  where `isactive`='1'";
+        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        list($weight) = $xoopsDB->fetchRow($result);
+    }
     $sql = "update " . $xoopsDB->prefix('modules') . " set `weight`='$weight' where `mid`='$mid'";
     $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 }
