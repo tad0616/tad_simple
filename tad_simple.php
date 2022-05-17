@@ -107,7 +107,11 @@ class TadSimpleGui extends XoopsSystemGui
             file_put_contents(XOOPS_ROOT_PATH . "/uploads/bootstrap.conf", "bootstrap = {$_SESSION['bootstrap']}");
         }
 
-        $xoTheme->addScript(XOOPS_URL . '/modules/tadtools/bootstrap' . $_SESSION['bootstrap'] . '/js/bootstrap.bundle.min.js');
+        if ($_SESSION['bootstrap'] == '3') {
+            $xoTheme->addScript(XOOPS_URL . '/modules/tadtools/bootstrap' . $_SESSION['bootstrap'] . '/js/bootstrap.min.js');
+        } else {
+            $xoTheme->addScript(XOOPS_URL . '/modules/tadtools/bootstrap' . $_SESSION['bootstrap'] . '/js/bootstrap.bundle.min.js');
+        }
 
         $xoTheme->addStylesheet(XOOPS_URL . "/modules/tadtools/bootstrap{$_SESSION['bootstrap']}-editable/css/bootstrap-editable.css");
         $xoTheme->addScript(XOOPS_URL . "/modules/tadtools/bootstrap{$_SESSION['bootstrap']}-editable/js/bootstrap-editable.js");
@@ -170,7 +174,7 @@ class TadSimpleGui extends XoopsSystemGui
             }
         } else {
             $moddir = $xoopsModule->getVar('dirname', 'n');
-            $modpath = XOOPS_URL . '/modules/' . $moddir;
+            $modpath = XOOPS_URL . '/modules/' . $moddir . '/admin/';
             $modname = $xoopsModule->getVar('name');
             $modid = $xoopsModule->getVar('mid');
 

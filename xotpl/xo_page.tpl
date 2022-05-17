@@ -1,10 +1,10 @@
 <div class="container-fluid">
     <div class="row">
         <{if $modules}>
-            <div class="col-md-8 col-lg-9">
+            <div class="col-lg-9 col-md-8">
                 <{includeq file="$theme_tpl/xo_modules.tpl"}>
             </div>
-            <div class="col-md-4 col-lg-3">
+            <div class="col-lg-3 col-md-4">
                 <{includeq file="$theme_tpl/xo_chk.tpl"}>
                 <{includeq file="$theme_tpl/xo_icons.tpl"}>
                 <{includeq file="$theme_tpl/xo_accordion.tpl"}>

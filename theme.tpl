@@ -5,8 +5,10 @@
         <{includeq file="$theme_tpl/xo_metas.tpl"}>
         <{if $smarty.session.bootstrap==5}>
             <{assign var="toggle" value="data-bs-toggle"}>
+            <{assign var="placement" value="data-bs-placement"}>
         <{else}>
             <{assign var="toggle" value="data-toggle"}>
+            <{assign var="placement" value="data-placement"}>
         <{/if}>
         <script>
             $(document).ready(function(){
