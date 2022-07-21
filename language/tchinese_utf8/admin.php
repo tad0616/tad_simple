@@ -55,3 +55,9 @@ define('_TAD_SIMPLE_FRONT_ENABLE', '有前台且運作中的');
 define('_TAD_SIMPLE_HIDDEN_IN_MENU', '不顯示於主選單的');
 define('_TAD_SIMPLE_NO_FRONT', '沒有前台頁面的');
 define('_TAD_SIMPLE_FUNCTION', '功能');
+
+define('_TAD_SIMPLE_INSTALL_MODULES', '手動安裝模組');
+define('_TAD_SIMPLE_INSTALL_ONLINE_MODULES', '線上安裝模組');
+define('_TAD_SIMPLE_INSTALL_BLOCKS', '傳統區塊管理');
+define('_TAD_SIMPLE_INSTALL_TAD_BLOCKS', '進階區塊管理');
+define('_TAD_SIMPLE_INSTALL_ONLINE_BLOCKS', '線上安裝區塊');

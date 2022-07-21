@@ -55,3 +55,9 @@ define('_TAD_SIMPLE_FRONT_ENABLE', 'Front page available and enabled ');
 define('_TAD_SIMPLE_HIDDEN_IN_MENU', 'Not shown on the main menu');
 define('_TAD_SIMPLE_NO_FRONT', 'No front page');
 define('_TAD_SIMPLE_FUNCTION', 'Function');
+
+define('_TAD_SIMPLE_INSTALL_MODULES', 'Manual installation module');
+define('_TAD_SIMPLE_INSTALL_ONLINE_MODULES', 'Online installation modules');
+define('_TAD_SIMPLE_INSTALL_BLOCKS', 'Legacy Block Management');
+define('_TAD_SIMPLE_INSTALL_TAD_BLOCKS', 'Advanced Block Management');
+define('_TAD_SIMPLE_INSTALL_ONLINE_BLOCKS', 'Online Installation Blocks');

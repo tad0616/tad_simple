@@ -17,7 +17,9 @@
                 $('.popwin').colorbox({iframe: true, width:"1160", height:"560",
                 onClosed  :function () {
                     window.location.reload();
-                }});
+                }
+                });
+
                 $('[<{$toggle}>="tooltip"]').tooltip();
                 $('#modules-sort').sortable({ opacity: 0.6, cursor: 'move', update: function() {
                     var order = $(this).sortable('serialize')+'&op=sort_modules';

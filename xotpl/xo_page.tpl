@@ -6,8 +6,10 @@
             </div>
             <div class="col-lg-3 col-md-4">
                 <{includeq file="$theme_tpl/xo_chk.tpl"}>
-                <{includeq file="$theme_tpl/xo_icons.tpl"}>
+                <{includeq file="$theme_tpl/xo_tools.tpl"}>
                 <{includeq file="$theme_tpl/xo_accordion.tpl"}>
+                <{includeq file="$theme_tpl/xo_icons.tpl"}>
+                <{includeq file="$theme_tpl/xo_info.tpl"}>
             </div>
         <{elseif $xoops_contents}>
             <div class="col-sm-12">
