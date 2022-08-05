@@ -13,7 +13,7 @@
         <script>
             $(document).ready(function(){
                 $('.hide').removeClass('hide').css('display','none');
-                $('.editable').editable({'url': '<{$xoops_url}>/modules/system/themes/tad_simple/tools.php'});
+                $('.tad-simple-editable').editable({'url': '<{$xoops_url}>/modules/system/themes/tad_simple/tools.php'});
                 $('.popwin').colorbox({iframe: true, width:"1160", height:"560",
                 onClosed  :function () {
                     window.location.reload();

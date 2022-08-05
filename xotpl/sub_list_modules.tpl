@@ -45,7 +45,7 @@
 
                 <div style="display: inline-block; margin-left: 4px;">
                     <div class="tad_mod_title">
-                        <span class="editable enable-color" title="<{$mod.title}>" data-name="title" data-type="text" data-pk="<{$mod.mid}>" data-title="<{$smarty.const._TAD_SIMPLE_MODIFY_MODULE_NAME}>" data-params="{op: 'update_module_title'}"><{$mod.name}></span>
+                        <span class="tad-simple-editable enable-color" title="<{$mod.title}>" data-name="title" data-type="text" data-pk="<{$mod.mid}>" data-title="<{$smarty.const._TAD_SIMPLE_MODIFY_MODULE_NAME}>" data-params="{op: 'update_module_title'}"><{$mod.name}></span>
                     </div>
                     <div style="margin-top: 4px;" class="unable-color">
                         <{$mod.info.dirname}> <{$mod.version}>
