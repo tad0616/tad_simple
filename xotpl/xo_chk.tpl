@@ -1,4 +1,4 @@
-<{if $theme_fromfile!=1 or !$theme_in_allowed or $auth_method=='tn'}>
+<{if $theme_fromfile!=1 or !$theme_in_allowed or $auth_method=='tn' or !$tad_adm_gperm_id or $sql_mode|strpos:'STRICT_TRANS_TABLES' || $sql_mode|strpos:'NO_ZERO_IN_DATE' || $sql_mode|strpos:'NO_ZERO_DATE' || $sql_mode|strpos:'ERROR_FOR_DIVISION_BY_ZERO' || $sql_mode|strpos:'ONLY_FULL_GROUP_BY'}>
     <div class="alert alert-danger">
         <ul>
             <{if $theme_fromfile!=1}>

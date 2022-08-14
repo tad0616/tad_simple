@@ -95,10 +95,15 @@
                 <{/if}>
             </li>
 
-            <li class="w10 m c">
+            <li class="w10 m ">
                 <div class="vcell"><{$smarty.const._TAD_SIMPLE_SITEPREF}></div>
-                <{if $mod.info.config}>
-                    <a href="<{$xoops_url}>/modules/system/admin.php?fct=preferences&op=showmod&mod=<{$mod.mid}>" title="<{$mod.title}><{$smarty.const._TAD_SIMPLE_SITEPREF}>"><{$smarty.const._TAD_SIMPLE_SITEPREF}> (<{$mod.info.config|@count}>)</a></li>
+                <{if $mod.info.dirname=="system"}>
+                    <a href="<{$xoops_url}>/modules/system/admin.php?fct=preferences&op=show&confcat_id=1" title="<{$mod.title}><{$smarty.const._MD_AM_GENERAL}>"><{$smarty.const._MD_AM_GENERAL}></a><br>
+                    <a href="<{$xoops_url}>/modules/system/admin.php?fct=preferences&op=show&confcat_id=2" title="<{$mod.title}><{$smarty.const._MD_AM_USERSETTINGS}>"><{$smarty.const._MD_AM_USERSETTINGS}></a><br>
+                    <a href="<{$xoops_url}>/modules/system/admin.php?fct=preferences&op=show&confcat_id=3" title="<{$mod.title}><{$smarty.const._MD_AM_METAFOOTER}>"><{$smarty.const._MD_AM_METAFOOTER}></a><br>
+                    <a href="<{$xoops_url}>/modules/system/admin.php?fct=preferences&op=show&confcat_id=5" title="<{$mod.title}><{$smarty.const._MD_AM_SEARCH}>"><{$smarty.const._MD_AM_SEARCH}></a><br>
+                <{elseif $mod.info.config}>
+                    <a href="<{$xoops_url}>/modules/system/admin.php?fct=preferences&op=showmod&mod=<{$mod.mid}>" title="<{$mod.title}><{$smarty.const._TAD_SIMPLE_SITEPREF}>"><{$smarty.const._TAD_SIMPLE_SITEPREF}> (<{$mod.info.config|@count}>)</a>
                 <{else}>
                     <{$smarty.const._TAD_SIMPLE_NO}><{$smarty.const._TAD_SIMPLE_SITEPREF}>
                 <{/if}>
