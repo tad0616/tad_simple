@@ -51,7 +51,7 @@ define('_TAD_SIMPLE_CLICK_TO_HIDE', '點擊改為不顯示於主選單');
 define('_TAD_SIMPLE_CLICK_TO_SHOW', '點擊改為顯示於主選單');
 define('_TAD_SIMPLE_CLICK_TO_UPDATE_MODULE', '點擊以更新模組');
 define('_TAD_SIMPLE_CLICK_TO_RELOAD_MODULE', '點擊以重讀模組設定');
-define('_TAD_SIMPLE_FRONT_ENABLE', '有前台且運作中的');
+define('_TAD_SIMPLE_FRONT_ENABLE', '顯示於主選單中的');
 define('_TAD_SIMPLE_HIDDEN_IN_MENU', '不顯示於主選單的');
 define('_TAD_SIMPLE_NO_FRONT', '沒有前台頁面的');
 define('_TAD_SIMPLE_FUNCTION', '功能');
