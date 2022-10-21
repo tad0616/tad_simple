@@ -172,12 +172,26 @@ a.btn-unable {
   background-color: #fce0ce;
 }
 
-div#buttontop_mod {
-  background: #FFFC4561 !important;
+#buttontop_mod {
+  background: unset;
+  font-size: 0.925rem;
+  border: 1px solid #afac4555 !important;
+  margin-top: 1rem;
+  background: #fffc4533 !important;
+  padding: 6px 15px;
+  border-radius: 6px;
 }
 
-div#buttonbar_mod {
-  background: #EEEEE3 !important;
+#buttonbar_mod {
+  float: left;
+  width: 100%;
+  background: #fff !important;
+  font-size: 0.925rem;
+  line-height: normal;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid rgb(197, 194, 194);
+  margin-bottom: 1rem;
 }
 
 div#buttontop_mod > table > tbody > tr > td {
@@ -187,7 +201,13 @@ div#buttontop_mod > table > tbody > tr > td {
 div#buttontop_mod > table > tbody > tr > td > a {
   font-size: 0.925rem !important;
   color: #000 !important;
-  /* font-weight: bold; */
+  padding: 3px 6px;
+  border-radius: 4px;
+}
+
+div#buttontop_mod > table > tbody > tr > td > a:hover {
+  color: white !important;
+  background-color: #00000088;
 }
 
 @media (max-width: 768px) {
