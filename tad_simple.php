@@ -156,6 +156,8 @@ class TadSimpleGui extends XoopsSystemGui
         $tpl->assign('upload_max_filesize', ini_get('upload_max_filesize'));
         $tpl->assign('xoops_sitename', $xoopsConfig['sitename']);
         $tpl->assign('server_ip', $_SERVER['SERVER_ADDR']);
+        $tpl->assign('remote_ip', $_SERVER['REMOTE_ADDR']);
+        $tpl->assign('forwarded_ip', $_SERVER['HTTP_X_FORWARDED_FOR']);
 
         //add SYSTEM  Menu items
         include __DIR__ . '/menu.php';
