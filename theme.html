@@ -1,15 +1,9 @@
 <!DOCTYPE html>
 <html lang="<{$xoops_langcode}>">
     <head>
-        <{config_load file="$xoops_rootpath/uploads/bootstrap.conf"}>
-        <{includeq file="$theme_tpl/xo_metas.tpl"}>
-        <{if $smarty.session.bootstrap==5}>
-            <{assign var="toggle" value="data-bs-toggle"}>
-            <{assign var="placement" value="data-bs-placement"}>
-        <{else}>
-            <{assign var="toggle" value="data-toggle"}>
-            <{assign var="placement" value="data-placement"}>
-        <{/if}>
+        <{include file="$theme_tpl/xo_metas.tpl"}>
+        <{assign var="toggle" value="data-bs-toggle"}>
+        <{assign var="placement" value="data-bs-placement"}>
         <script>
             $(document).ready(function(){
                 $('.hide').removeClass('hide').css('display','none');
@@ -35,22 +29,20 @@
                 });
             });
 
-            <{if $smarty.session.bootstrap==5}>
-                var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-                var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-                    return new bootstrap.Tooltip(tooltipTriggerEl)
-                });
-            <{/if}>
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            });
         </script>
     </head>
     <body id="<{$xoops_dirname}>" class="<{$xoops_langcode}>">
     <{if $clean_mode==1}>
-        <{includeq file="$theme_tpl/xo_page.tpl" }>
+        <{include file="$theme_tpl/xo_page.tpl" }>
     <{else}>
         <!-- 頁首 -->
-        <{includeq file="$theme_tpl/xo_head.tpl"}>
-        <{includeq file="$theme_tpl/xo_page.tpl" }>
-        <{includeq file="$theme_tpl/xo_footer.tpl"}>
+        <{include file="$theme_tpl/xo_head.tpl"}>
+        <{include file="$theme_tpl/xo_page.tpl" }>
+        <{include file="$theme_tpl/xo_footer.tpl"}>
     <{/if}>
 
     </body>

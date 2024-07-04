@@ -55,6 +55,7 @@ class TadSimpleGui extends XoopsSystemGui
             }
         }
 
+        $tpl->assign('bootstrap', $_SESSION['bootstrap']);
         $tpl->assign('clean_templates', $clean_templates);
         $tpl->assign('debug', $xoopsConfig['debug_mode']);
         $tpl->assign('theme_fromfile', $xoopsConfig['theme_fromfile']);
@@ -97,22 +98,7 @@ class TadSimpleGui extends XoopsSystemGui
         // $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/tad_simple/js/styleswitch.js');
         // $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/tad_simple/js/formenu.js');
 
-        if (file_exists(XOOPS_ROOT_PATH . "/uploads/bootstrap.conf")) {
-            $bootstrap = substr(file_get_contents(XOOPS_ROOT_PATH . "/uploads/bootstrap.conf"), -1);
-            $_SESSION['bootstrap'] = $bootstrap ? $bootstrap : 4;
-        } elseif ($_SESSION['bootstrap']) {
-            file_put_contents(XOOPS_ROOT_PATH . "/uploads/bootstrap.conf", "bootstrap = {$_SESSION['bootstrap']}");
-        } else {
-            $_SESSION['bootstrap'] = '4';
-            file_put_contents(XOOPS_ROOT_PATH . "/uploads/bootstrap.conf", "bootstrap = {$_SESSION['bootstrap']}");
-        }
-
-        if ($_SESSION['bootstrap'] == '3') {
-            $xoTheme->addScript(XOOPS_URL . '/modules/tadtools/bootstrap' . $_SESSION['bootstrap'] . '/js/bootstrap.min.js');
-        } else {
-            $xoTheme->addScript(XOOPS_URL . '/modules/tadtools/bootstrap' . $_SESSION['bootstrap'] . '/js/bootstrap.bundle.min.js');
-        }
-
+        $xoTheme->addScript(XOOPS_URL . '/modules/tadtools/bootstrap' . $_SESSION['bootstrap'] . '/js/bootstrap.bundle.min.js');
         $xoTheme->addStylesheet(XOOPS_URL . "/modules/tadtools/bootstrap{$_SESSION['bootstrap']}-editable/css/bootstrap-editable.css");
         $xoTheme->addScript(XOOPS_URL . "/modules/tadtools/bootstrap{$_SESSION['bootstrap']}-editable/js/bootstrap-editable.js");
 
@@ -157,7 +143,8 @@ class TadSimpleGui extends XoopsSystemGui
         $tpl->assign('xoops_sitename', $xoopsConfig['sitename']);
         $tpl->assign('server_ip', $_SERVER['SERVER_ADDR']);
         $tpl->assign('remote_ip', $_SERVER['REMOTE_ADDR']);
-        $tpl->assign('forwarded_ip', $_SERVER['HTTP_X_FORWARDED_FOR']);
+        $forwarded_ip = isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : '';
+        $tpl->assign('forwarded_ip', $forwarded_ip);
 
         //add SYSTEM  Menu items
         include __DIR__ . '/menu.php';
@@ -224,9 +211,9 @@ class TadSimpleGui extends XoopsSystemGui
                 $rtn['mid'] = $mod->getVar('mid');
                 $rtn['hasmain'] = $mod->getVar('hasmain');
                 $rtn['isactive'] = $mod->getVar('isactive');
-                $rtn['version'] = round($mod->getVar('version') / 100, 2);
-                // $rtn['version'] = Utility::get_version($info['dirname'], $mod->getVar('version'));
-                // $rtn['version'] = $mod->getVar('version');
+                // $rtn['version'] = round($mod->getVar('version') / 100, 2);
+                $rtn['version_int'] = Utility::get_version($info['dirname'], $mod->getVar('version'));
+                $rtn['version'] = $mod->getVar('version');
                 $rtn['weight'] = $mod->getVar('weight');
                 if (!empty($info['adminindex'])) {
                     $rtn['link'] = XOOPS_URL . "/modules/{$info['dirname']}/{$info['adminindex']}";
@@ -297,19 +284,10 @@ if ($ver >= 20509) {
 
         public static function validate()
         {
-            Utility::get_bootstrap();
 
-            if ($_SESSION['bootstrap'] == '3') {
-                xoops_load('XoopsFormRendererBootstrap3');
-                XoopsFormRenderer::getInstance()->set(new XoopsFormRendererBootstrap3());
-            } else if ($_SESSION['bootstrap'] == '5') {
-                xoops_load('XoopsFormRendererBootstrap5');
-                XoopsFormRenderer::getInstance()->set(new XoopsFormRendererBootstrap5());
-            } else {
-                $_SESSION['bootstrap'] = '4';
-                xoops_load('XoopsFormRendererBootstrap4');
-                XoopsFormRenderer::getInstance()->set(new XoopsFormRendererBootstrap4());
-            }
+            xoops_load('XoopsFormRendererBootstrap5');
+            XoopsFormRenderer::getInstance()->set(new XoopsFormRendererBootstrap5());
+
             return true;
         }
     }

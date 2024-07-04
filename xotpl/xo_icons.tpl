@@ -11,11 +11,11 @@
     <{/foreach}>
 
     <div class="tad_adm_icon">
-        <a href="<{xoAppUrl modules/system/admin.php}>" title="<{$smarty.const._AM_SYSTEM_CONFIG}>">
+        <a href="<{$xoops_url}>/modules/system/admin.php" title="<{$smarty.const._AM_SYSTEM_CONFIG}>">
             <img src='<{"$theme_icons/configuration.png"}>'>
         </a>
         <div>
-            <a href="<{xoAppUrl modules/system/admin.php}>" title="<{$smarty.const._AM_SYSTEM_CONFIG}>" class="tad_icon_text"><{$smarty.const._AM_SYSTEM_CONFIG}></a>
+            <a href="<{$xoops_url}>/modules/system/admin.php" title="<{$smarty.const._AM_SYSTEM_CONFIG}>" class="tad_icon_text"><{$smarty.const._AM_SYSTEM_CONFIG}></a>
         </div>
 
     </div>

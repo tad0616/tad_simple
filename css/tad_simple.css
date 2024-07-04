@@ -101,8 +101,10 @@ a.tad_icon_text:visited {
   color: #042c47;
 }
 
-.unable-color {
+.version-color {
   color: #520534;
+  font-size: 0.825rem;
+  font-family: Arial;
 }
 
 .tad_mod_title {

@@ -22,7 +22,7 @@
     </div>
      <div class="row" style="margin-bottom: 0.5rem;">
         <label class="col-sm-6">BootStrap <{$smarty.const._TAD_SIMPLE_VERSION}></label>
-        <div class="col-sm-6"><{$smarty.session.bootstrap}></div>
+        <div class="col-sm-6"><{$bootstrap}></div>
     </div>
      <div class="row" style="margin-bottom: 0.5rem;">
         <label class="col-sm-6"><{$smarty.const._TAD_SIMPLE_OS}></label>
