@@ -145,7 +145,7 @@
                 <{/if}>
 
                 <{if $mod.version!=$mod.info.version}>
-                    <a href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&op=update&module=<{$mod.info.dirname}>&tad_adm_tpl=clean" class="popwin" <{$toggle}>="tooltip" title="<{$mod.version}>!=<{$mod.info.version}> <{$smarty.const._TAD_SIMPLE_CLICK_TO_UPDATE_MODULE}>"><img class="img-fluid my" src="<{$xoops_url}>/modules/system/images/icons/transition/messagebox_warning.png" alt="<{$smarty.const._TAD_SIMPLE_UPDATE}>" style="width: 24px; vertical-align: middle;"></a>
+                    <a href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&op=update&module=<{$mod.info.dirname}>&tad_adm_tpl=clean" class="popwin" <{$toggle}>="tooltip" title="<{$smarty.const._TAD_SIMPLE_CLICK_TO_UPDATE_MODULE}>"><img class="img-fluid my" src="<{$xoops_url}>/modules/system/images/icons/transition/messagebox_warning.png" alt="<{$smarty.const._TAD_SIMPLE_UPDATE}>" style="width: 24px; vertical-align: middle;"></a>
                 <{else}>
                     <a href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&op=update&module=<{$mod.info.dirname}>&tad_adm_tpl=clean" class="popwin" <{$toggle}>="tooltip" title="<{$smarty.const._TAD_SIMPLE_CLICK_TO_RELOAD_MODULE}>"><img class="img-fluid my" src="<{$xoops_url}>/modules/system/images/icons/transition/reload.png" alt="<{$smarty.const._TAD_SIMPLE_RELOAD}>" style="width: 24px; vertical-align: middle;"></a>
                 <{/if}>

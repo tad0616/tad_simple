@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="row">
-        <{if $modules || $unable_modules}>
+        <{if $modules || $hide_modules || $no_menu_modules || $unable_modules}>
             <div class="col-lg-9 col-md-8">
                 <{include file="$theme_tpl/xo_modules.tpl"}>
             </div>
