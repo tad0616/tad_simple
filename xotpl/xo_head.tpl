@@ -11,7 +11,7 @@
         </div>
         <div class="col col-xs-4">
             <div class="text-center">
-                <a href="<{$xoops_url}>">
+                <a href="<{$xoops_url}>" style="z-index:10000;position: relative;">
                     <img src="<{$xoops_url}>/modules/system/themes/tad_simple/img/home.png" alt="<{$smarty.const._YOURHOME}>" style="width: 50px; margin: 7px auto;" <{$toggle}>="tooltip" <{$placement}>="bottom" title="<{$smarty.const._YOURHOME}>">
                 </a>
             </div>

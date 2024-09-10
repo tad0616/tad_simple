@@ -11,12 +11,14 @@
                 $('.popwin').colorbox({iframe: true, width:"1160", height:"560",
                 onClosed  :function () {
                     window.location.reload();
-                }});
+                }
+                });
+
                 $('[<{$toggle}>="tooltip"]').tooltip();
                 $('#modules-sort').sortable({ opacity: 0.6, cursor: 'move', update: function() {
                     var order = $(this).sortable('serialize')+'&op=sort_modules';
                     $.post('<{$xoops_url}>/modules/system/themes/tad_simple/tools.php', order, function(theResponse){
-                        $('#save_msg').html(theResponse);
+                        window.location.reload();
                     });
                 }
                 });
@@ -41,7 +43,7 @@
     <{else}>
         <!-- 頁首 -->
         <{include file="$theme_tpl/xo_head.tpl"}>
-        <{include file="$theme_tpl/xo_page.tpl" }>
+        <{include file="$theme_tpl/xo_page.tpl"}>
         <{include file="$theme_tpl/xo_footer.tpl"}>
     <{/if}>
 
