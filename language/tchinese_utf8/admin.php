@@ -62,7 +62,7 @@ define('_TAD_SIMPLE_INSTALL_BLOCKS', '傳統區塊管理');
 define('_TAD_SIMPLE_INSTALL_TAD_BLOCKS', '進階區塊管理');
 define('_TAD_SIMPLE_INSTALL_ONLINE_BLOCKS', '線上安裝區塊');
 
-define('_MD_AM_GENERAL', '一般設定');
-define('_MD_AM_USERSETTINGS', '註冊會員設定');
-define('_MD_AM_METAFOOTER', 'Meta 及頁尾');
-define('_MD_AM_SEARCH', '搜尋選項');
+// define('_MD_AM_GENERAL', '一般設定');
+// define('_MD_AM_USERSETTINGS', '註冊會員設定');
+// define('_MD_AM_METAFOOTER', 'Meta 及頁尾');
+// define('_MD_AM_SEARCH', '搜尋選項');

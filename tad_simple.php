@@ -230,7 +230,8 @@ class TadSimpleGui extends XoopsSystemGui
                     $rtn['icon'] = XOOPS_URL . "/modules/{$info['dirname']}/{$info['image']}";
                 }
                 $rtn['info'] = $info;
-                $rtn['admin_menu'] = $this->adminmenu(XOOPS_ROOT_PATH . "/modules/{$info['dirname']}/", $info['adminmenu']);
+                $adminmenu = isset($info['adminmenu']) ? $info['adminmenu'] : null;
+                $rtn['admin_menu'] = $this->adminmenu(XOOPS_ROOT_PATH . "/modules/{$info['dirname']}/", $adminmenu);
                 $rtn['interface_menu'] = $this->interface_menu($info['dirname']);
 
                 if ($rtn['isactive']) {
@@ -252,7 +253,7 @@ class TadSimpleGui extends XoopsSystemGui
 
     private function adminmenu($path, $menu)
     {
-        if (file_exists($path . $menu)) {
+        if (!empty($menu) && file_exists($path . $menu)) {
             include $path . $menu;
             return $adminmenu;
         }

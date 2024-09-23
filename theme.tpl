@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="<{$xoops_langcode}>">
+<html lang="<{$xoops_langcode|default:''}>">
     <head>
         <{include file="$theme_tpl/xo_metas.tpl"}>
         <{assign var="toggle" value="data-bs-toggle"}>
@@ -14,7 +14,7 @@
                 }
                 });
 
-                $('[<{$toggle}>="tooltip"]').tooltip();
+                $('[<{$toggle|default:''}>="tooltip"]').tooltip();
                 $('#modules-sort').sortable({ opacity: 0.6, cursor: 'move', update: function() {
                     var order = $(this).sortable('serialize')+'&op=sort_modules';
                     $.post('<{$xoops_url}>/modules/system/themes/tad_simple/tools.php', order, function(theResponse){
@@ -37,7 +37,7 @@
             });
         </script>
     </head>
-    <body id="<{$xoops_dirname}>" class="<{$xoops_langcode}>">
+    <body id="<{$xoops_dirname|default:''}>" class="<{$xoops_langcode|default:''}>">
     <{if $clean_mode==1}>
         <{include file="$theme_tpl/xo_page.tpl" }>
     <{else}>

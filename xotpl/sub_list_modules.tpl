@@ -1,6 +1,6 @@
-<div id="<{$modules_type}>-sort" class="vtb">
+<div id="<{$modules_type|default:''}>-sort" class="vtb">
     <ul class="vhead">
-        <li class="w20 m"><{$modules_txt}><{$smarty.const._TAD_SIMPLE_MODULE}></li>
+        <li class="w20 m"><{$modules_txt|default:''}><{$smarty.const._TAD_SIMPLE_MODULE}></li>
         <{if $modules_type!='no_menu_modules'}>
             <li class="w30 m"><{$smarty.const._TAD_SIMPLE_BACKEND}><{$smarty.const._TAD_SIMPLE_PAGE}></li>
             <li class="w25 m"><{$smarty.const._TAD_SIMPLE_FRONT}><{$smarty.const._TAD_SIMPLE_PAGE}></li>
@@ -13,26 +13,6 @@
         <li class="w10 m"><{$smarty.const._TAD_SIMPLE_FUNCTION}></li>
     </ul>
     <{foreach from=$list_modules item=mod}>
-        <{*
-                <{foreach from=$mod.info key=k item=v}>
-                    <{if $v|is_array}>
-                        <div><{$k}>：</div>
-                        <{foreach from=$v key=kk item=vv}>
-                            <{if $vv|is_array}>
-                                <div><{$kk}>：</div>
-                                <{foreach from=$vv key=kkk item=vvv}>
-                                    <div style="color:red;margin-left:4rem;"><{$kkk}>=<{$vvv}></div>
-                                <{/foreach}>
-                            <{else}>
-                                <div style="color:blue;margin-left:2rem;"><{$kk}>=<{$vv}></div>
-                            <{/if}>
-                        <{/foreach}>
-                    <{else}>
-                        <div><{$k}>=<{$v}></div>
-                    <{/if}>
-                <{/foreach}>
-        *}>
-
         <ul <{if $mod.info.hasMain==1}>id="mids_<{$mod.mid}>"<{/if}> class="<{if !$mod.isactive}>unable<{/if}>">
             <li class="w20 m mobile-title">
                 <{if $mod.info.hasAdmin==1}>
@@ -80,12 +60,12 @@
                 <div class="vcell"><{$smarty.const._TAD_SIMPLE_FRONT}><{$smarty.const._TAD_SIMPLE_PAGE}></div>
                 <{if $mod.info.hasMain==1}>
                     <a href="<{$xoops_url}>/modules/<{$mod.info.dirname}>" title="<{$mod.title}><{$smarty.const._TAD_SIMPLE_FRONT}>" class="btn-my btn-page"><{$mod.title}><{$smarty.const._TAD_SIMPLE_FRONT}></a>
-                    <{if $mod.interface_menu}>
+                    <{if $mod.interface_menu|default:false}>
                         <{foreach from=$mod.interface_menu key=item_name item=item_url}>
-                            <a href="<{$xoops_url}>/modules/<{$mod.info.dirname}>/<{$item_url}>" class="btn-my btn-page"><{$item_name}></a>
+                            <a href="<{$xoops_url}>/modules/<{$mod.info.dirname}>/<{$item_url|default:''}>" class="btn-my btn-page"><{$item_name|default:''}></a>
                         <{/foreach}>
 
-                    <{else}>
+                    <{elseif $mod.info.sub|default:[]}>
                         <{foreach from=$mod.info.sub item=items}>
                             <a href="<{$xoops_url}>/modules/<{$mod.info.dirname}>/<{$items.url}>" class="btn-my btn-page"><{$items.name}></a>
                         <{/foreach}>
@@ -102,7 +82,7 @@
                     <a href="<{$xoops_url}>/modules/system/admin.php?fct=preferences&op=show&confcat_id=2" title="<{$mod.title}><{$smarty.const._MD_AM_USERSETTINGS}>"><{$smarty.const._MD_AM_USERSETTINGS}></a><br>
                     <a href="<{$xoops_url}>/modules/system/admin.php?fct=preferences&op=show&confcat_id=3" title="<{$mod.title}><{$smarty.const._MD_AM_METAFOOTER}>"><{$smarty.const._MD_AM_METAFOOTER}></a><br>
                     <a href="<{$xoops_url}>/modules/system/admin.php?fct=preferences&op=show&confcat_id=5" title="<{$mod.title}><{$smarty.const._MD_AM_SEARCH}>"><{$smarty.const._MD_AM_SEARCH}></a><br>
-                <{elseif $mod.info.config}>
+                <{elseif $mod.info.config|default:false}>
                     <a href="<{$xoops_url}>/modules/system/admin.php?fct=preferences&op=showmod&mod=<{$mod.mid}>" title="<{$mod.title}><{$smarty.const._TAD_SIMPLE_SITEPREF}>"><{$smarty.const._TAD_SIMPLE_SITEPREF}> (<{$mod.info.config|@count}>)</a>
                 <{else}>
                     <{$smarty.const._TAD_SIMPLE_NO}><{$smarty.const._TAD_SIMPLE_SITEPREF}>
@@ -111,7 +91,7 @@
 
             <li class="w5 m c">
                 <div class="vcell"><{$smarty.const._TAD_SIMPLE_MODULE}><{$smarty.const._TAD_SIMPLE_BLOCK}></div>
-                <{if $mod.info.blocks}>
+                <{if $mod.info.blocks|default:false}>
                     <a href="<{$xoops_url}>/modules/system/admin.php?fct=blocksadmin&op=list&filter=1&selgen=<{$mod.mid}>&selmod=-2&selgrp=-1&selvis=-1" title="<{$mod.title}><{$smarty.const._TAD_SIMPLE_BLOCK}>"><{$mod.info.blocks|@count}><{$smarty.const._TAD_SIMPLE_BLOCK}></a>
                 <{else}>
                     <{$smarty.const._TAD_SIMPLE_NO}><{$smarty.const._TAD_SIMPLE_BLOCK}>
@@ -121,22 +101,22 @@
             <li class="w10 m">
                 <div class="vcell"><{$smarty.const._TAD_SIMPLE_FUNCTION}></div>
                 <{if $mod.info.dirname!='system'}>
-                    <{if $mod.isactive}>
-                        <a href="<{$xoops_url}>/modules/system/themes/tad_simple/tools.php?op=change_module_status&mid=<{$mod.mid}>&isactive=0" <{$toggle}>="tooltip" title="<{$smarty.const._TAD_SIMPLE_CLICK_TO_UNABLE_MODULE}>"><img class="img-fluid my" src="<{$xoops_url}>/modules/system/images/icons/transition/success.png" alt="<{$smarty.const._TAD_SIMPLE_ENABLE}>" style="width: 24px; vertical-align: middle;"></a>
+                    <{if $mod.isactive|default:false}>
+                        <a href="<{$xoops_url}>/modules/system/themes/tad_simple/tools.php?op=change_module_status&mid=<{$mod.mid}>&isactive=0" <{$toggle|default:''}>="tooltip" title="<{$smarty.const._TAD_SIMPLE_CLICK_TO_UNABLE_MODULE}>"><img class="img-fluid my" src="<{$xoops_url}>/modules/system/images/icons/transition/success.png" alt="<{$smarty.const._TAD_SIMPLE_ENABLE}>" style="width: 24px; vertical-align: middle;"></a>
                     <{else}>
-                        <a href="<{$xoops_url}>/modules/system/themes/tad_simple/tools.php?op=change_module_status&mid=<{$mod.mid}>&isactive=1" <{$toggle}>="tooltip" title="<{$smarty.const._TAD_SIMPLE_CLICK_TO_ENABLE_MODULE}>"><img class="img-fluid my" src="<{$xoops_url}>/modules/system/images/icons/transition/cancel.png" alt="<{$smarty.const._TAD_SIMPLE_UNABLE}>" style="width: 24px; vertical-align: middle;"></a>
+                        <a href="<{$xoops_url}>/modules/system/themes/tad_simple/tools.php?op=change_module_status&mid=<{$mod.mid}>&isactive=1" <{$toggle|default:''}>="tooltip" title="<{$smarty.const._TAD_SIMPLE_CLICK_TO_ENABLE_MODULE}>"><img class="img-fluid my" src="<{$xoops_url}>/modules/system/images/icons/transition/cancel.png" alt="<{$smarty.const._TAD_SIMPLE_UNABLE}>" style="width: 24px; vertical-align: middle;"></a>
                     <{/if}>
 
 
                     <{if $modules_type=="unable_modules"}>
-                        <a href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&op=uninstall&module=<{$mod.info.dirname}>" <{$toggle}>="tooltip" title="<{$smarty.const._TAD_SIMPLE_CLICK_TO_UNINSTALL_MODULE}>"><img class="img-fluid my" src="<{$xoops_url}>/modules/system/images/icons/transition/uninstall.png" alt="<{$smarty.const._TAD_SIMPLE_UNINSTALL}>" style="width: 24px; vertical-align: middle;"></a>
+                        <a href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&op=uninstall&module=<{$mod.info.dirname}>" <{$toggle|default:''}>="tooltip" title="<{$smarty.const._TAD_SIMPLE_CLICK_TO_UNINSTALL_MODULE}>"><img class="img-fluid my" src="<{$xoops_url}>/modules/system/images/icons/transition/uninstall.png" alt="<{$smarty.const._TAD_SIMPLE_UNINSTALL}>" style="width: 24px; vertical-align: middle;"></a>
                     <{else}>
 
                         <{if $mod.info.hasMain==0}>
                         <{elseif $mod.weight}>
-                            <a href="<{$xoops_url}>/modules/system/themes/tad_simple/tools.php?op=change_module_display&mid=<{$mod.mid}>&weight=0" <{$toggle}>="tooltip" title="(<{$smarty.const._TAD_SIMPLE_SEQUENCE}> <{$mod.weight}>) <{$smarty.const._TAD_SIMPLE_CLICK_TO_HIDE}>" class="btn-my btn-enable"> <{$mod.weight}> </a>
+                            <a href="<{$xoops_url}>/modules/system/themes/tad_simple/tools.php?op=change_module_display&mid=<{$mod.mid}>&weight=0" <{$toggle|default:''}>="tooltip" title="(<{$smarty.const._TAD_SIMPLE_SEQUENCE}> <{$mod.weight}>) <{$smarty.const._TAD_SIMPLE_CLICK_TO_HIDE}>" class="btn-my btn-enable"> <{$mod.weight}> </a>
                         <{else}>
-                            <a href="<{$xoops_url}>/modules/system/themes/tad_simple/tools.php?op=change_module_display&mid=<{$mod.mid}>&weight=auto" <{$toggle}>="tooltip" title="<{$smarty.const._TAD_SIMPLE_CLICK_TO_SHOW}>" class="btn-my btn-unable"><{$smarty.const._TAD_SIMPLE_HIDE}></a>
+                            <a href="<{$xoops_url}>/modules/system/themes/tad_simple/tools.php?op=change_module_display&mid=<{$mod.mid}>&weight=auto" <{$toggle|default:''}>="tooltip" title="<{$smarty.const._TAD_SIMPLE_CLICK_TO_SHOW}>" class="btn-my btn-unable"><{$smarty.const._TAD_SIMPLE_HIDE}></a>
                         <{/if}>
                     <{/if}>
 
@@ -145,9 +125,9 @@
                 <{/if}>
 
                 <{if $mod.version!=$mod.info.version}>
-                    <a href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&op=update&module=<{$mod.info.dirname}>&tad_adm_tpl=clean" class="popwin" <{$toggle}>="tooltip" title="<{$smarty.const._TAD_SIMPLE_CLICK_TO_UPDATE_MODULE}>"><img class="img-fluid my" src="<{$xoops_url}>/modules/system/images/icons/transition/messagebox_warning.png" alt="<{$smarty.const._TAD_SIMPLE_UPDATE}>" style="width: 24px; vertical-align: middle;"></a>
+                    <a href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&op=update&module=<{$mod.info.dirname}>&tad_adm_tpl=clean" class="popwin" <{$toggle|default:''}>="tooltip" title="<{$smarty.const._TAD_SIMPLE_CLICK_TO_UPDATE_MODULE}>"><img class="img-fluid my" src="<{$xoops_url}>/modules/system/images/icons/transition/messagebox_warning.png" alt="<{$smarty.const._TAD_SIMPLE_UPDATE}>" style="width: 24px; vertical-align: middle;"></a>
                 <{else}>
-                    <a href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&op=update&module=<{$mod.info.dirname}>&tad_adm_tpl=clean" class="popwin" <{$toggle}>="tooltip" title="<{$smarty.const._TAD_SIMPLE_CLICK_TO_RELOAD_MODULE}>"><img class="img-fluid my" src="<{$xoops_url}>/modules/system/images/icons/transition/reload.png" alt="<{$smarty.const._TAD_SIMPLE_RELOAD}>" style="width: 24px; vertical-align: middle;"></a>
+                    <a href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&op=update&module=<{$mod.info.dirname}>&tad_adm_tpl=clean" class="popwin" <{$toggle|default:''}>="tooltip" title="<{$smarty.const._TAD_SIMPLE_CLICK_TO_RELOAD_MODULE}>"><img class="img-fluid my" src="<{$xoops_url}>/modules/system/images/icons/transition/reload.png" alt="<{$smarty.const._TAD_SIMPLE_RELOAD}>" style="width: 24px; vertical-align: middle;"></a>
                 <{/if}>
             </li>
         </ul>
