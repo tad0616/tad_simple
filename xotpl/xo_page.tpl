@@ -15,7 +15,7 @@
             <div class="col-sm-12">
                 <{*Display Admin menu*}>
                 <{if $xo_system_menu|default:false}><{$xo_system_menu|default:''}><{/if}>
-                <{$xoops_contents}>
+                <{$xoops_contents|default:''}>
             </div>
         <{/if}>
     </div>

@@ -21,7 +21,7 @@ class TadSimpleGui extends XoopsSystemGui
 {
     public function __construct()
     {
-
+        $_SESSION['xoops_version'] = Utility::get_version('xoops');
     }
 
     public function header()
@@ -31,6 +31,7 @@ class TadSimpleGui extends XoopsSystemGui
         global $xoopsConfig, $xoopsUser, $xoopsModule, $xoTheme, $xoopsDB;
         $tpl = &$this->template;
 
+        xoops_loadLanguage('admin/preferences', 'system');
         // $ScrollTable = new ScrollTable();
         // $ScrollTable_js = $ScrollTable->render('#modules_table', 1, 1, 500, 12);
         // $tpl->assign('ScrollTable_js', $ScrollTable_js);
@@ -54,7 +55,9 @@ class TadSimpleGui extends XoopsSystemGui
                 closedir($dh);
             }
         }
-
+        if (!isset($_SESSION['bootstrap'])) {
+            Utility::get_bootstrap();
+        }
         $tpl->assign('bootstrap', $_SESSION['bootstrap']);
         $tpl->assign('clean_templates', $clean_templates);
         $tpl->assign('debug', $xoopsConfig['debug_mode']);
@@ -98,7 +101,7 @@ class TadSimpleGui extends XoopsSystemGui
         // $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/tad_simple/js/styleswitch.js');
         // $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/tad_simple/js/formenu.js');
 
-        $xoTheme->addScript(XOOPS_URL . '/modules/tadtools/bootstrap' . $_SESSION['bootstrap'] . '/js/bootstrap.bundle.min.js');
+        $xoTheme->addScript('modules/tadtools/bootstrap' . $_SESSION['bootstrap'] . '/js/bootstrap.bundle.min.js');
         $xoTheme->addStylesheet(XOOPS_URL . "/modules/tadtools/bootstrap{$_SESSION['bootstrap']}-editable/css/bootstrap-editable.css");
         $xoTheme->addScript(XOOPS_URL . "/modules/tadtools/bootstrap{$_SESSION['bootstrap']}-editable/js/bootstrap-editable.js");
 
@@ -108,11 +111,12 @@ class TadSimpleGui extends XoopsSystemGui
         $xoTheme->addStylesheet(XOOPS_URL . "/modules/tadtools/colorbox/colorbox.css");
         $xoTheme->addScript(XOOPS_URL . "/modules/tadtools/colorbox/jquery.colorbox.js");
 
-        $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/fonts.css');
+        $xoTheme->addStylesheet('modules/tadtools/css/fonts.css');
         $xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/tad_simple/css/style.css');
-        $xoTheme->addStylesheet(XOOPS_ADMINTHEME_URL . '/tad_simple/css/vtb.css');
+        $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/vtb.css');
 
-        $xoTheme->addStylesheet(XOOPS_URL . "/modules/tadtools/css/font-awesome/css/font-awesome.css");
+        $xoTheme->addStylesheet('modules/tadtools/css/fontawesome6/css/all.min.css');
+        // $xoTheme->addStylesheet(XOOPS_URL . "/modules/tadtools/css/font-awesome/css/font-awesome.css");
 
         $tpl->assign('lang_cp', _CPHOME);
         //start system overview
@@ -211,9 +215,8 @@ class TadSimpleGui extends XoopsSystemGui
                 $rtn['mid'] = $mod->getVar('mid');
                 $rtn['hasmain'] = $mod->getVar('hasmain');
                 $rtn['isactive'] = $mod->getVar('isactive');
-                // $rtn['version'] = round($mod->getVar('version') / 100, 2);
                 $rtn['version_int'] = Utility::get_version($info['dirname'], $mod->getVar('version'));
-                $rtn['version'] = $mod->getVar('version');
+                $rtn['version'] = $_SESSION['xoops_version'] >= 20511 ? $mod->getVar('version') : round($mod->getVar('version') / 100, 2);
                 $rtn['weight'] = $mod->getVar('weight');
                 if (!empty($info['adminindex'])) {
                     $rtn['link'] = XOOPS_URL . "/modules/{$info['dirname']}/{$info['adminindex']}";
@@ -232,7 +235,7 @@ class TadSimpleGui extends XoopsSystemGui
                 $rtn['info'] = $info;
                 $adminmenu = isset($info['adminmenu']) ? $info['adminmenu'] : null;
                 $rtn['admin_menu'] = $this->adminmenu(XOOPS_ROOT_PATH . "/modules/{$info['dirname']}/", $adminmenu);
-                $rtn['interface_menu'] = $this->interface_menu($info['dirname']);
+                list($rtn['interface_menu'], $rtn['interface_icon']) = $this->interface_menu($info['dirname']);
 
                 if ($rtn['isactive']) {
                     if ($rtn['hasmain']) {
@@ -261,18 +264,20 @@ class TadSimpleGui extends XoopsSystemGui
 
     private function interface_menu($dirname)
     {
-        if (file_exists(XOOPS_ROOT_PATH . "/uploads/menu_{$dirname}.txt")) {
-            $interface_menu = [];
-            $json = file_get_contents(XOOPS_ROOT_PATH . "/uploads/menu_{$dirname}.txt");
-            $menu_arr = json_decode($json, true);
-
-            foreach ($menu_arr as $name => $url) {
-
-                if (strpos($url, 'admin/') === false && $url != 'index.php') {
-                    $interface_menu[$name] = $url;
-                }
+        global $xoopsConfig;
+        if (file_exists(XOOPS_ROOT_PATH . "/modules/$dirname/interface_menu.php")) {
+            if (file_exists(XOOPS_ROOT_PATH . "/modules/{$dirname}/language/{$xoopsConfig['language']}/main.php")) {
+                require_once XOOPS_ROOT_PATH . "/modules/{$dirname}/language/{$xoopsConfig['language']}/main.php";
             }
-            return $interface_menu;
+            require_once XOOPS_ROOT_PATH . "/modules/$dirname/interface_menu.php";
+            return [$interface_menu, $interface_icon];
+        } elseif (file_exists(XOOPS_ROOT_PATH . "/modules/$dirname/interface.php")) {
+            if (file_exists(XOOPS_ROOT_PATH . "/modules/{$dirname}/language/{$xoopsConfig['language']}/main.php")) {
+                require_once XOOPS_ROOT_PATH . "/modules/{$dirname}/language/{$xoopsConfig['language']}/main.php";
+            }
+
+            require_once XOOPS_ROOT_PATH . "/modules/$dirname/interface.php";
+            return [$interface_menu, $interface_icon];
         }
     }
 

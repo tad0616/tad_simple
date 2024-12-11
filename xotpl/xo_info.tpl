@@ -65,4 +65,8 @@
       <label class="col-sm-6">HTTP_X_FORWARDED_FOR</label>
       <div class="col-sm-6"><{$forwarded_ip|default:''}></div>
   </div>
+  <div class="row" style="margin-bottom: 0.5rem;">
+     <label class="col-sm-6">Tad Simple Version</label>
+     <div class="col-sm-6">2.0</div>
+ </div>
 </div>

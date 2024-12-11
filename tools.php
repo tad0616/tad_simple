@@ -15,6 +15,7 @@ $mid = Request::getInt('mid');
 $weight = Request::getString('weight');
 $isactive = Request::getInt('isactive');
 $mids = Request::getArray('mids');
+$module = Request::getString('module');
 
 switch ($op) {
 
@@ -75,6 +76,7 @@ switch ($op) {
         sql_mode();
         header("location: " . XOOPS_URL . "/admin.php");
         exit;
+
 }
 
 // 顯示或隱藏模組
