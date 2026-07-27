@@ -28,7 +28,7 @@
 <!-- Xoops style sheet -->
 <link rel="stylesheet" type="text/css" media="screen" href="<{$xoops_url}>/xoops.css">
 
-<link href="<{$xoops_url}>/modules/tadtools/css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<link href="<{$xoops_url}>/modules/tadtools/css/fontawesome6/css/all.min.css" rel="stylesheet">
 <link href="<{$xoops_url}>/modules/tadtools/bootstrap5/css/bootstrap.css" rel="stylesheet">
 <link href="<{$xoops_url}>/modules/tadtools/css/xoops_adm5.css" rel="stylesheet">
 

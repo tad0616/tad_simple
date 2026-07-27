@@ -39,6 +39,7 @@ define('_TAD_SIMPLE_MODIFY_MODULE_NAME', '修改模組名稱');
 define('_TAD_SIMPLE_NO', '無');
 define('_TAD_SIMPLE_SEQUENCE', '排序');
 define('_TAD_SIMPLE_UNINSTALL', '反安裝');
+define('_TAD_SIMPLE_BATCH', '將選取的項目進行');
 define('_TAD_SIMPLE_UPDATE', '更新模組');
 define('_TAD_SIMPLE_RELOAD', '重讀模組設定');
 define('_TAD_SIMPLE_ENABLE', '啟用中');
@@ -61,8 +62,3 @@ define('_TAD_SIMPLE_INSTALL_ONLINE_MODULES', '線上安裝模組');
 define('_TAD_SIMPLE_INSTALL_BLOCKS', '傳統區塊管理');
 define('_TAD_SIMPLE_INSTALL_TAD_BLOCKS', '進階區塊管理');
 define('_TAD_SIMPLE_INSTALL_ONLINE_BLOCKS', '線上安裝區塊');
-
-// define('_MD_AM_GENERAL', '一般設定');
-// define('_MD_AM_USERSETTINGS', '註冊會員設定');
-// define('_MD_AM_METAFOOTER', 'Meta 及頁尾');
-// define('_MD_AM_SEARCH', '搜尋選項');

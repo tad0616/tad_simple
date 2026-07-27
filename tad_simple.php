@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /*
 You may not change or alter any portion of this comment or credits
 of supporting developers from this source code or any supporting source code
@@ -37,9 +37,9 @@ class TadSimpleGui extends XoopsSystemGui
         // $tpl->assign('ScrollTable_js', $ScrollTable_js);
 
         //檢查舊樣板
-        $theme_name = $xoopsConfig['theme_set'];
+        $theme_name      = $xoopsConfig['theme_set'];
         $clean_templates = false;
-        $dir = XOOPS_ROOT_PATH . "/themes/{$theme_name}/modules/";
+        $dir             = XOOPS_ROOT_PATH . "/themes/{$theme_name}/modules/";
         if (is_dir($dir)) {
             if ($dh = opendir($dir)) {
                 while (($file = readdir($dh)) !== false) {
@@ -66,25 +66,30 @@ class TadSimpleGui extends XoopsSystemGui
         $tpl->assign('theme_set', $theme_name);
         $tpl->assign('theme_in_allowed', in_array($theme_name, $xoopsConfig['theme_set_allowed']));
 
-        $sql = "select conf_value from " . $xoopsDB->prefix("config") . " where conf_name='auth_method'";
-        $result = $xoopsDB->queryF($sql) or web_error($sql);
+        $sql               = "select conf_value from " . $xoopsDB->prefix("config") . " where conf_name='auth_method'";
+        $result            = $xoopsDB->queryF($sql) or web_error($sql);
         list($auth_method) = $xoopsDB->fetchRow($result);
         $tpl->assign('auth_method', $auth_method);
 
-        $sql = "select mid from " . $xoopsDB->prefix("modules") . " where dirname='tad_adm'";
-        $result = $xoopsDB->queryF($sql) or web_error($sql);
+        $sql               = "select mid from " . $xoopsDB->prefix("modules") . " where dirname='tad_adm'";
+        $result            = $xoopsDB->queryF($sql) or web_error($sql);
         list($tad_adm_mid) = $xoopsDB->fetchRow($result);
         $tpl->assign('tad_adm_mid', $tad_adm_mid);
-        $sql = "select gperm_id from " . $xoopsDB->prefix("group_permission") . " where gperm_itemid='$tad_adm_mid' and gperm_groupid='3' and gperm_modid='1' and gperm_name='module_read'";
-        $result = $xoopsDB->queryF($sql) or web_error($sql);
+        $sql                    = "select gperm_id from " . $xoopsDB->prefix("group_permission") . " where gperm_itemid='$tad_adm_mid' and gperm_groupid='3' and gperm_modid='1' and gperm_name='module_read'";
+        $result                 = $xoopsDB->queryF($sql) or web_error($sql);
         list($tad_adm_gperm_id) = $xoopsDB->fetchRow($result);
         $tpl->assign('tad_adm_gperm_id', $tad_adm_gperm_id);
 
-        $dirname = XOOPS_VAR_PATH . "/caches/smarty_compile/";
-        if (glob($dirname . "*.php") != false) {
-            $filecount = count(glob($dirname . "*.php"));
-            $tpl->assign('filecount', $filecount);
+        $dirname   = XOOPS_VAR_PATH . "/caches/smarty_compile/";
+        $filecount = 0;
+        if (is_dir($dirname)) {
+            foreach (new DirectoryIterator($dirname) as $fileInfo) {
+                if ($fileInfo->isFile() && $fileInfo->getExtension() === 'php') {
+                    $filecount++;
+                }
+            }
         }
+        $tpl->assign('filecount', $filecount);
 
         $clean_mode = 0;
         if (isset($_REQUEST['tad_adm_tpl']) and $_REQUEST['tad_adm_tpl'] == "clean") {
@@ -101,9 +106,9 @@ class TadSimpleGui extends XoopsSystemGui
         // $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/tad_simple/js/styleswitch.js');
         // $xoTheme->addScript(XOOPS_ADMINTHEME_URL . '/tad_simple/js/formenu.js');
 
-        $xoTheme->addScript('modules/tadtools/bootstrap' . $_SESSION['bootstrap'] . '/js/bootstrap.bundle.min.js');
-        $xoTheme->addStylesheet(XOOPS_URL . "/modules/tadtools/bootstrap{$_SESSION['bootstrap']}-editable/css/bootstrap-editable.css");
-        $xoTheme->addScript(XOOPS_URL . "/modules/tadtools/bootstrap{$_SESSION['bootstrap']}-editable/js/bootstrap-editable.js");
+        $xoTheme->addScript('modules/tadtools/bootstrap5/js/bootstrap.bundle.min.js');
+        $xoTheme->addStylesheet(XOOPS_URL . "/modules/tadtools/bootstrap5-editable/css/bootstrap-editable.css");
+        $xoTheme->addScript(XOOPS_URL . "/modules/tadtools/bootstrap5-editable/js/bootstrap-editable.js");
 
         $xoTheme->addStylesheet(XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/css/easy-responsive-tabs.css");
         $xoTheme->addScript(XOOPS_URL . "/modules/tadtools/Easy-Responsive-Tabs/js/easyResponsiveTabs.js");
@@ -116,22 +121,21 @@ class TadSimpleGui extends XoopsSystemGui
         $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/vtb.css');
 
         $xoTheme->addStylesheet('modules/tadtools/css/fontawesome6/css/all.min.css');
-        // $xoTheme->addStylesheet(XOOPS_URL . "/modules/tadtools/css/font-awesome/css/font-awesome.css");
 
         $tpl->assign('lang_cp', _CPHOME);
         //start system overview
         //$tpl->assign('lang_xoops_version', XOOPS_VERSION);
         $tpl->assign('lang_php_vesion', PHP_VERSION);
 
-        $sql = "select version()";
-        $result = $xoopsDB->queryF($sql);
+        $sql       = "select version()";
+        $result    = $xoopsDB->queryF($sql);
         list($ver) = $xoopsDB->fetchRow($result);
         $tpl->assign('lang_mysql_version', $ver);
 
         $tpl->assign('lang_web_version', $_SERVER['SERVER_SOFTWARE']);
 
-        $sql = "select @@sql_mode";
-        $result = $xoopsDB->queryF($sql);
+        $sql            = "select @@sql_mode";
+        $result         = $xoopsDB->queryF($sql);
         list($sql_mode) = $xoopsDB->fetchRow($result);
         $tpl->assign('sql_mode', $sql_mode);
 
@@ -155,10 +159,10 @@ class TadSimpleGui extends XoopsSystemGui
         if (empty($xoopsModule) || 'system' === $xoopsModule->getVar('dirname', 'n')) {
             $modpath = XOOPS_URL . '/admin.php';
             $modname = _TAD_SIMPLE_SYSOPTIONS;
-            $modid = 1;
-            $moddir = 'system';
+            $modid   = 1;
+            $moddir  = 'system';
 
-            $mod_options = $adminmenu;
+            $mod_options = isset($adminmenu) ? $adminmenu : [];
             foreach (array_keys($mod_options) as $item) {
                 $mod_options[$item]['link'] = empty($mod_options[$item]['absolute']) ? XOOPS_URL . '/modules/' . $moddir . '/' . $mod_options[$item]['link'] : $mod_options[$item]['link'];
                 // echo "<div>{$mod_options[$item]['icon']}</div>";
@@ -166,10 +170,10 @@ class TadSimpleGui extends XoopsSystemGui
                 unset($mod_options[$item]['icon_small']);
             }
         } else {
-            $moddir = $xoopsModule->getVar('dirname', 'n');
+            $moddir  = $xoopsModule->getVar('dirname', 'n');
             $modpath = XOOPS_URL . '/modules/' . $moddir . '/admin/';
             $modname = $xoopsModule->getVar('name');
-            $modid = $xoopsModule->getVar('mid');
+            $modid   = $xoopsModule->getVar('mid');
 
             $mod_options = $xoopsModule->getAdminMenu();
             foreach (array_keys($mod_options) as $item) {
@@ -190,7 +194,7 @@ class TadSimpleGui extends XoopsSystemGui
 
         // add MODULES  Menu items
         $module_handler = xoops_getHandler('module');
-        $criteria = new CriteriaCompo();
+        $criteria       = new CriteriaCompo();
         $criteria->setOrder('weight');
         // $criteria->add(new Criteria('hasadmin', 1));
         // $criteria->add(new Criteria('isactive', 1));
@@ -210,31 +214,31 @@ class TadSimpleGui extends XoopsSystemGui
         foreach ($mods as $mod) {
             $sadmin = $moduleperm_handler->checkRight('module_admin', $mod->getVar('mid'), $xoopsUser->getGroups());
             if ($sadmin) {
-                $rtn = array();
-                $info = $mod->getInfo();
-                $rtn['mid'] = $mod->getVar('mid');
-                $rtn['hasmain'] = $mod->getVar('hasmain');
-                $rtn['isactive'] = $mod->getVar('isactive');
+                $rtn                = [];
+                $info               = $mod->getInfo();
+                $rtn['mid']         = $mod->getVar('mid');
+                $rtn['hasmain']     = $mod->getVar('hasmain');
+                $rtn['isactive']    = $mod->getVar('isactive');
                 $rtn['version_int'] = Utility::get_version($info['dirname'], $mod->getVar('version'));
-                $rtn['version'] = $_SESSION['xoops_version'] >= 20511 ? $mod->getVar('version') : round($mod->getVar('version') / 100, 2);
-                $rtn['weight'] = $mod->getVar('weight');
+                $rtn['version']     = $_SESSION['xoops_version'] >= 20511 ? $mod->getVar('version') : round($mod->getVar('version') / 100, 2);
+                $rtn['weight']      = $mod->getVar('weight');
                 if (!empty($info['adminindex'])) {
                     $rtn['link'] = XOOPS_URL . "/modules/{$info['dirname']}/{$info['adminindex']}";
                 } else {
                     $rtn['link'] = XOOPS_URL . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $mod->getVar('mid');
                 }
-                $rtn['title'] = htmlspecialchars($info['name'], ENT_QUOTES);
-                $rtn['name'] = htmlspecialchars($mod->getVar('name'), ENT_QUOTES);
+                $rtn['title']       = htmlspecialchars($info['name'], ENT_QUOTES);
+                $rtn['name']        = htmlspecialchars($mod->getVar('name'), ENT_QUOTES);
                 $rtn['description'] = $mod->getInfo('description');
-                $rtn['absolute'] = 1;
+                $rtn['absolute']    = 1;
                 if (isset($info['icon_big'])) {
                     $rtn['icon'] = XOOPS_URL . "/modules/{$info['dirname']}/{$info['icon_big']}";
                 } elseif (isset($info['image'])) {
                     $rtn['icon'] = XOOPS_URL . "/modules/{$info['dirname']}/{$info['image']}";
                 }
-                $rtn['info'] = $info;
-                $adminmenu = isset($info['adminmenu']) ? $info['adminmenu'] : null;
-                $rtn['admin_menu'] = $this->adminmenu(XOOPS_ROOT_PATH . "/modules/{$info['dirname']}/", $adminmenu);
+                $rtn['info']                                         = $info;
+                $adminmenu                                           = isset($info['adminmenu']) ? $info['adminmenu'] : null;
+                $rtn['admin_menu']                                   = $this->adminmenu(XOOPS_ROOT_PATH . "/modules/{$info['dirname']}/", $adminmenu);
                 list($rtn['interface_menu'], $rtn['interface_icon']) = $this->interface_menu($info['dirname']);
 
                 if ($rtn['isactive']) {

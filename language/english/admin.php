@@ -39,6 +39,7 @@ define('_TAD_SIMPLE_MODIFY_MODULE_NAME', 'Modify Module Name');
 define('_TAD_SIMPLE_NO', 'No');
 define('_TAD_SIMPLE_SEQUENCE', 'Sequence');
 define('_TAD_SIMPLE_UNINSTALL', 'Uninstall');
+define('_TAD_SIMPLE_BATCH', 'Batch');
 define('_TAD_SIMPLE_UPDATE', 'Update Module');
 define('_TAD_SIMPLE_RELOAD', 'Re-read Module Settings');
 define('_TAD_SIMPLE_ENABLE', 'Enabled');
@@ -61,8 +62,3 @@ define('_TAD_SIMPLE_INSTALL_ONLINE_MODULES', 'Online installation modules');
 define('_TAD_SIMPLE_INSTALL_BLOCKS', 'Legacy Block Management');
 define('_TAD_SIMPLE_INSTALL_TAD_BLOCKS', 'Advanced Block Management');
 define('_TAD_SIMPLE_INSTALL_ONLINE_BLOCKS', 'Online Installation Blocks');
-
-// define('_MD_AM_GENERAL', 'General Settings');
-// define('_MD_AM_USERSETTINGS', 'User Info Settings');
-// define('_MD_AM_METAFOOTER', 'Meta Tags and Footer');
-// define('_MD_AM_SEARCH', 'Search Options');

@@ -4,20 +4,31 @@ use XoopsModules\Tadtools\Utility;
 
 // include_once "../../../../mainfile.php";
 require_once dirname(dirname(dirname(dirname(__DIR__)))) . '/include/cp_header.php';
-$op = Request::getString('op');
-$v = Request::getString('v');
+$op          = Request::getString('op');
+$v           = Request::getString('v');
 $tad_adm_mid = Request::getInt('tad_adm_mid');
 
-$pk = Request::getString('pk');
-$name = Request::getString('name');
-$value = Request::getString('value');
-$mid = Request::getInt('mid');
-$weight = Request::getString('weight');
+$pk       = Request::getString('pk');
+$name     = Request::getString('name');
+$value    = Request::getString('value');
+$mid      = Request::getInt('mid');
+$weight   = Request::getString('weight');
 $isactive = Request::getInt('isactive');
-$mids = Request::getArray('mids');
-$module = Request::getString('module');
+$mids     = Request::getArray('mids');
+$module   = Request::getString('module');
+$modules  = Request::getArray('modules');
 
 switch ($op) {
+
+    case "module_uninstall":
+        module_uninstall($modules);
+        header("location: " . XOOPS_URL . "/admin.php");
+        exit;
+
+    case "module_update":
+        module_update($modules);
+        header("location: " . XOOPS_URL . "/admin.php");
+        exit;
 
     case "change_module_display":
         change_module_display($mid, $weight);
@@ -79,13 +90,48 @@ switch ($op) {
 
 }
 
+function module_uninstall($modules)
+{
+    xoops_loadLanguage('admin/modulesadmin', 'system');
+    require_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
+    require_once XOOPS_ROOT_PATH . '/class/template.php';
+    require_once XOOPS_ROOT_PATH . '/modules/system/admin/modulesadmin/modulesadmin.php';
+
+    $configHandler = xoops_getHandler('config');
+
+    $xoopsConfig = $configHandler->getConfigsByCat(XOOPS_CONF);
+
+    $msgs = [];
+    foreach ($modules as $dirname) {
+        $msgs[] = xoops_module_uninstall($dirname);
+    }
+
+}
+
+function module_update($modules)
+{
+    xoops_loadLanguage('admin/modulesadmin', 'system');
+    require_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
+    require_once XOOPS_ROOT_PATH . '/class/template.php';
+    require_once XOOPS_ROOT_PATH . '/modules/system/admin/modulesadmin/modulesadmin.php';
+
+    $configHandler = xoops_getHandler('config');
+
+    $xoopsConfig = $configHandler->getConfigsByCat(XOOPS_CONF);
+
+    $msgs = [];
+    foreach ($modules as $dirname) {
+        $msgs[] = xoops_module_update($dirname);
+    }
+}
+
 // 顯示或隱藏模組
 function change_module_display($mid, $weight)
 {
     global $xoopsDB;
     if ($weight == 'auto') {
-        $sql = "select max(`weight`)+1 from " . $xoopsDB->prefix('modules') . "  where `isactive`='1'";
-        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $sql          = "select max(`weight`)+1 from " . $xoopsDB->prefix('modules') . "  where `isactive`='1'";
+        $result       = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         list($weight) = $xoopsDB->fetchRow($result);
     }
     $sql = "update " . $xoopsDB->prefix('modules') . " set `weight`='$weight' where `mid`='$mid'";
@@ -135,7 +181,7 @@ function theme_in_allowed()
     global $xoopsConfig, $xoopsDB;
 
     $xoopsConfig['theme_set_allowed'][] = $xoopsConfig['theme_set'];
-    $theme_set_allowed = serialize($xoopsConfig['theme_set_allowed']);
+    $theme_set_allowed                  = serialize($xoopsConfig['theme_set_allowed']);
 
     $sql = 'update ' . $xoopsDB->prefix('config') . " set conf_value='{$theme_set_allowed}' where conf_name='theme_set_allowed'";
     $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
@@ -150,8 +196,8 @@ function clean_templates($dirs = array(), $files = array())
     $isWin = strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? true : false;
 
     $theme_name = $xoopsConfig['theme_set'];
-    $all_dir = array();
-    $dir = XOOPS_ROOT_PATH . "/themes/{$theme_name}/modules/";
+    $all_dir    = array();
+    $dir        = XOOPS_ROOT_PATH . "/themes/{$theme_name}/modules/";
     if (is_dir($dir)) {
         if ($dh = opendir($dir)) {
             while (($file = readdir($dh)) !== false) {
@@ -162,7 +208,7 @@ function clean_templates($dirs = array(), $files = array())
 
                 if (is_dir($dir . $file)) {
                     $mod_dir = $isWin ? iconv("Big5", "UTF-8", $dir . $file) : $dir . $file;
-                    delete_directory($mod_dir, true);
+                    tad_simple_delete_directory($mod_dir, true);
                 } else {
                     continue;
                 }
@@ -180,7 +226,7 @@ function clear_cache()
     $dirnames[] = XOOPS_VAR_PATH . "/caches/xoops_cache";
     foreach ($dirnames as $dirname) {
         if (is_dir($dirname)) {
-            delete_directory($dirname);
+            tad_simple_delete_directory($dirname);
             $fp = fopen("{$dirname}/index.html", 'w');
             fwrite($fp, '<script>history.go(-1);</script>');
             fclose($fp);
@@ -189,7 +235,7 @@ function clear_cache()
 }
 
 //刪除目錄檔案
-function delete_directory($dirname, $rmdir = false)
+function tad_simple_delete_directory($dirname, $rmdir = false)
 {
     if (is_dir($dirname)) {
         $dir_handle = opendir($dirname);
@@ -204,7 +250,7 @@ function delete_directory($dirname, $rmdir = false)
             if (!is_dir($dirname . "/" . $file)) {
                 unlink($dirname . "/" . $file);
             } else {
-                delete_directory($dirname . '/' . $file, $rmdir);
+                tad_simple_delete_directory($dirname . '/' . $file, $rmdir);
             }
         }
     }
