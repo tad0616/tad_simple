@@ -269,6 +269,8 @@ class TadSimpleGui extends XoopsSystemGui
     private function interface_menu($dirname)
     {
         global $xoopsConfig;
+        // 模組的選單檔可能沒定義這兩個變數（或整段被註解掉）
+        $interface_menu = $interface_icon = [];
         if (file_exists(XOOPS_ROOT_PATH . "/modules/$dirname/interface_menu.php")) {
             if (file_exists(XOOPS_ROOT_PATH . "/modules/{$dirname}/language/{$xoopsConfig['language']}/main.php")) {
                 require_once XOOPS_ROOT_PATH . "/modules/{$dirname}/language/{$xoopsConfig['language']}/main.php";
@@ -283,6 +285,8 @@ class TadSimpleGui extends XoopsSystemGui
             require_once XOOPS_ROOT_PATH . "/modules/$dirname/interface.php";
             return [$interface_menu, $interface_icon];
         }
+
+        return [$interface_menu, $interface_icon];
     }
 
 }
