@@ -28,6 +28,11 @@ class TadSimpleGui extends XoopsSystemGui
     {
         parent::header();
 
+        // XOOPS 2.7 建立佈景時會把 $xoopsConfig['theme_set'] 改成後台佈景，改從設定快取取得資料庫原值
+        $sys_config        = xoops_getHandler('config')->getConfigsByCat(XOOPS_CONF);
+        $theme_name        = $sys_config['theme_set'];
+        $theme_set_allowed = (array) $sys_config['theme_set_allowed'];
+
         global $xoopsConfig, $xoopsUser, $xoopsModule, $xoTheme, $xoopsDB;
         $tpl = &$this->template;
 
@@ -37,7 +42,6 @@ class TadSimpleGui extends XoopsSystemGui
         // $tpl->assign('ScrollTable_js', $ScrollTable_js);
 
         //檢查舊樣板
-        $theme_name      = $xoopsConfig['theme_set'];
         $clean_templates = false;
         $dir             = XOOPS_ROOT_PATH . "/themes/{$theme_name}/modules/";
         if (is_dir($dir)) {
@@ -64,7 +68,7 @@ class TadSimpleGui extends XoopsSystemGui
         $tpl->assign('theme_fromfile', $xoopsConfig['theme_fromfile']);
 
         $tpl->assign('theme_set', $theme_name);
-        $tpl->assign('theme_in_allowed', in_array($theme_name, $xoopsConfig['theme_set_allowed']));
+        $tpl->assign('theme_in_allowed', in_array($theme_name, $theme_set_allowed));
 
         $sql               = "select conf_value from " . $xoopsDB->prefix("config") . " where conf_name='auth_method'";
         $result            = $xoopsDB->queryF($sql) or web_error($sql);

@@ -181,7 +181,7 @@ function theme_in_allowed()
     global $xoopsConfig, $xoopsDB;
 
     $xoopsConfig['theme_set_allowed'][] = $xoopsConfig['theme_set'];
-    $theme_set_allowed                  = serialize($xoopsConfig['theme_set_allowed']);
+    $theme_set_allowed                  = serialize(array_values(array_unique($xoopsConfig['theme_set_allowed'])));
 
     $sql = 'update ' . $xoopsDB->prefix('config') . " set conf_value='{$theme_set_allowed}' where conf_name='theme_set_allowed'";
     $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
