@@ -17,6 +17,23 @@ if (!class_exists('XoopsModules\Tadtools\Utility')) {
     include XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
 }
 
+if (!function_exists('tad_simple_safe_constants')) {
+    // 預先補定義檔案中缺少的語系常數，避免 Undefined constant 嚴重錯誤
+    function tad_simple_safe_constants($file)
+    {
+        if (!is_file($file)) {
+            return;
+        }
+        if (preg_match_all('/(?<![\w\'"])(_[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)+)(?![\w\'"(])/', (string) file_get_contents($file), $matches)) {
+            foreach (array_unique($matches[1]) as $const) {
+                if (!defined($const)) {
+                    define($const, $const);
+                }
+            }
+        }
+    }
+}
+
 class TadSimpleGui extends XoopsSystemGui
 {
     public function __construct()
@@ -209,6 +226,7 @@ class TadSimpleGui extends XoopsSystemGui
 
         if (is_object($xoopsModule) || !empty($_GET['xoopsorgnews'])) {
             if (is_object($xoopsModule) && file_exists($file = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/' . $xoopsModule->getInfo('adminmenu'))) {
+                tad_simple_safe_constants($file);
                 include $file;
             }
 
@@ -265,6 +283,7 @@ class TadSimpleGui extends XoopsSystemGui
     private function adminmenu($path, $menu)
     {
         if (!empty($menu) && file_exists($path . $menu)) {
+            tad_simple_safe_constants($path . $menu);
             include $path . $menu;
             return $adminmenu;
         }
@@ -279,13 +298,15 @@ class TadSimpleGui extends XoopsSystemGui
             if (file_exists(XOOPS_ROOT_PATH . "/modules/{$dirname}/language/{$xoopsConfig['language']}/main.php")) {
                 require_once XOOPS_ROOT_PATH . "/modules/{$dirname}/language/{$xoopsConfig['language']}/main.php";
             }
+            tad_simple_safe_constants(XOOPS_ROOT_PATH . "/modules/$dirname/interface_menu.php");
             require_once XOOPS_ROOT_PATH . "/modules/$dirname/interface_menu.php";
             return [$interface_menu, $interface_icon];
         } elseif (file_exists(XOOPS_ROOT_PATH . "/modules/$dirname/interface.php")) {
             if (file_exists(XOOPS_ROOT_PATH . "/modules/{$dirname}/language/{$xoopsConfig['language']}/main.php")) {
                 require_once XOOPS_ROOT_PATH . "/modules/{$dirname}/language/{$xoopsConfig['language']}/main.php";
             }
-
+
+            tad_simple_safe_constants(XOOPS_ROOT_PATH . "/modules/$dirname/interface.php");
             require_once XOOPS_ROOT_PATH . "/modules/$dirname/interface.php";
             return [$interface_menu, $interface_icon];
         }

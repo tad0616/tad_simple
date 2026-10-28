@@ -41,7 +41,9 @@ $dirlist   = XoopsLists::getDirListAsArray($admin_dir);
 $index     = 0;
 foreach ($dirlist as $file) {
     if (file_exists($admin_dir . '/' . $file . '/xoops_version.php')) {
-        include $admin_dir . '/' . $file . '/xoops_version.php';
+        $version_file = $admin_dir . '/' . $file . '/xoops_version.php';
+        tad_simple_safe_constants($version_file);
+        include $version_file;
         if ($modversion['hasAdmin']) {
             if (xoops_getModuleOption('active_' . $file, 'system')) {
                 $category = isset($modversion['category']) ? (int)$modversion['category'] : 0;
